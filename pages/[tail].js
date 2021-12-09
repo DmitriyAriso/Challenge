@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
 import { useRouter } from 'next/router'
-import { fileService } from '../services/file'
+import { dataService } from '../services'
 
 export default function Tail({ data = [], tails = [], error }) {
 	const {
@@ -29,28 +29,21 @@ export default function Tail({ data = [], tails = [], error }) {
 }
 
 export async function getServerSideProps() {
-	const data = fileService.getFile('./files/data.json')
+	try {
+		const data = dataService.getData()
 
-	if (typeof data.message === 'string') {
 		return {
 			props: {
-				error: data.message,
-			},
-		}
-	}
-
-	if (!data)
-		return {
-			props: {
-				data: null,
+				data,
 				error: '',
 			},
 		}
-
-	return {
-		props: {
-			data,
-			error: '',
-		},
+	} catch (error) {
+		return {
+			props: {
+				data: null,
+				error: error.message,
+			},
+		}
 	}
 }
