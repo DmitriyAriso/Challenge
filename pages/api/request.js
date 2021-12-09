@@ -1,10 +1,10 @@
 export const request = async (url) => {
-    const BASE_URL = `${process.env.NEXT_PUBLIC_HTTPS_URL}/${url}`
-    const options = {
-        headers: {
-            'x-hasura-admin-secret': process.env.NEXT_PUBLIC_HASURA_SECRET
-        }
-    }
+	const BASE_URL = `${process.env.BASE_URL}/${url}`
+	const options = {
+		headers: {
+			'x-hasura-admin-secret': process.env.HASURA_SECRET,
+		},
+	}
 
-    return fetch(BASE_URL, options).then(res => res.json())
+	return fetch(BASE_URL, options).then((res) => res.json())
 }
