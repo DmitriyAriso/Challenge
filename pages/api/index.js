@@ -1,0 +1,2 @@
+export {getTails} from './getTails'
+
